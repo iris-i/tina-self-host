@@ -32,6 +32,7 @@
     "js-base64": "^3.7.5",
     "mongodb-level": "^0.0.2",
     "next": "^12.3.1",
+    "next-auth": "^4.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
