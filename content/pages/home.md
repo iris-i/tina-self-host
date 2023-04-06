@@ -1,7 +1,7 @@
 ---
 title: Tina Cloud Starter
 blocks:
-  - headline: 'Welcome to the Tina Starter, why is this different now?'
+  - headline: Welcome to the Tina Starter test again
     text: >
       This project is set up to show you the basics of working with Tina. You're
       looking at the landing page, which pulls content from
