@@ -6,12 +6,38 @@ import { testimonialBlockSchema } from "../components/blocks/testimonial";
 import { ColorPickerInput } from "../components/fields/color";
 import { iconSchema } from "../components/util/icon";
 
+const LOCAL_KEY = 'tina-cms-test'
+
 const config = defineConfig({
   contentApiUrlOverride: '/api/gql',
   admin: {
     auth: {
-      useLocalAuth: true,
+      // useLocalAuth: true,
       // process.env.TINA_PUBLIC_IS_LOCAL == 'true',
+      customAuth: true,
+      authenticate: async () => {
+        localStorage.setItem(LOCAL_KEY, "a-test-token");
+      },
+      getToken: async () => {
+        // typically a JWT token
+        const token = localStorage.getItem(LOCAL_KEY)
+        if (token) {
+          return { id_token: token }
+        } else {
+          return { id_token: '' }
+        }
+      },
+      getUser: async () => {
+        // If user is logged in return true. Else return false
+        if (localStorage.getItem(LOCAL_KEY)) {
+          return true
+        } else {
+          return false;
+        }
+      },
+      logout: async () => {
+        localStorage.removeItem(LOCAL_KEY)
+      }
     },
   },
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,

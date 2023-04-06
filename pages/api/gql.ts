@@ -17,7 +17,8 @@ const nextApiHandler: NextApiHandler = async (req, res) => {
   //   tinaCloudUser?.verified ||
   //   false;
 
-  const isAuthorized = true;
+  const isAuthorized = req?.headers.authorization === 'Bearer a-test-token';
+  console.log("Authorization token: ", req?.headers.authorization)
 
   if (isAuthorized) {
     const { query, variables } = req.body;
