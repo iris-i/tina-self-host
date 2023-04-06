@@ -5,8 +5,36 @@ import { heroBlockSchema } from "../components/blocks/hero";
 import { testimonialBlockSchema } from "../components/blocks/testimonial";
 import { ColorPickerInput } from "../components/fields/color";
 import { iconSchema } from "../components/util/icon";
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "../pages/api/auth/[...nextauth]"
+import { useSession } from "next-auth/react"
 
-const LOCAL_KEY = 'tina-cms-test'
+const LOCAL_KEY = 'tina-cms-test';
+
+// export async function handler(req, res) {
+//   const session = await getServerSession(req, res, authOptions)
+//   console.log(session)
+
+//   if (!session) {
+//     res.status(401).json({ message: "You must be logged in." });
+//     return;
+//   }
+
+//   return res.json({
+//     message: 'Success',
+//   })
+// }
+
+const getSession = () => {
+  const { data: session } = useSession();
+  const userHasValidSession = Boolean(session)
+  return ({
+    session,
+    userHasValidSession
+  });
+}
+
+
 
 const config = defineConfig({
   contentApiUrlOverride: '/api/gql',
@@ -16,28 +44,18 @@ const config = defineConfig({
       // process.env.TINA_PUBLIC_IS_LOCAL == 'true',
       customAuth: true,
       authenticate: async () => {
-        localStorage.setItem(LOCAL_KEY, "a-test-token");
+        window.location.href = '/api/auth/signin'
       },
       getToken: async () => {
-        // typically a JWT token
-        const token = localStorage.getItem(LOCAL_KEY)
-        if (token) {
-          return { id_token: token }
-        } else {
-          return { id_token: '' }
-        }
+        console.log(getSession())
+
       },
       getUser: async () => {
-        // If user is logged in return true. Else return false
-        if (localStorage.getItem(LOCAL_KEY)) {
-          return true
-        } else {
-          return false;
-        }
+
       },
       logout: async () => {
-        localStorage.removeItem(LOCAL_KEY)
-      }
+
+      },
     },
   },
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
