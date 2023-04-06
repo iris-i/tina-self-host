@@ -47,7 +47,7 @@ const githubOnPut = async (key, value) => {
     owner,
     repo,
     path: key,
-    message: "commit from self-hosted tina",
+    message: "Content commit from self-hosted tina",
     content: Base64.encode(value),
     branch,
     sha,
@@ -79,7 +79,7 @@ const githubOnDelete = async (key) => {
       owner,
       repo,
       path: key,
-      message: "commit from self-hosted tina",
+      message: "Content commit from self-hosted tina",
       branch,
       sha,
     });

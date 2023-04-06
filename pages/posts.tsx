@@ -3,11 +3,16 @@ import { Section } from "../components/util/section";
 import { Posts } from "../components/posts";
 import { Layout } from "../components/layout";
 import { dbConnection } from "../lib/databaseConnection";
+import { useSession, signIn, signOut, getSession } from "next-auth/react"
 
 export default function HomePage(
   props: AsyncReturnType<typeof getStaticProps>["props"]
 ) {
   const posts = props.data.postConnection.edges;
+
+  // const [session, loading] = useSession();
+  let sessionData = useSession();
+  console.log(sessionData)
 
   return (
     <Layout>
