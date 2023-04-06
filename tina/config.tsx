@@ -7,6 +7,13 @@ import { ColorPickerInput } from "../components/fields/color";
 import { iconSchema } from "../components/util/icon";
 
 const config = defineConfig({
+  contentApiUrlOverride: '/api/gql',
+  admin: {
+    auth: {
+      useLocalAuth: true,
+      // process.env.TINA_PUBLIC_IS_LOCAL == 'true',
+    },
+  },
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID!,
   branch:
     process.env.NEXT_PUBLIC_TINA_BRANCH! || // custom branch env override
