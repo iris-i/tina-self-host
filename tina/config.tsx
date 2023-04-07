@@ -50,7 +50,6 @@ const config = defineConfig({
       },
       getUser: async () => {
         let sessionData = await getServerSideProps();
-        console.log('User', sessionData)
         return sessionData?.user;
       },
       logout: async () => {
