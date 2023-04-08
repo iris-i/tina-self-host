@@ -32,8 +32,6 @@ const getServerSideProps = async () => {
   return res.json();
 }
 
-
-
 const config = defineConfig({
   contentApiUrlOverride: '/api/gql',
   admin: {
@@ -42,7 +40,7 @@ const config = defineConfig({
       // process.env.TINA_PUBLIC_IS_LOCAL == 'true',
       customAuth: true,
       authenticate: async () => {
-        window.location.href = '/api/auth/signin'
+        window.location.href = '/api/auth/signin?callbackUrl=/admin'
       },
       getToken: async () => {
         let sessionData = await getServerSideProps();

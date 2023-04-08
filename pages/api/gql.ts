@@ -1,9 +1,8 @@
-import { NextApiHandler } from "next";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { isUserAuthorized } from "@tinacms/auth";
 import { databaseRequest } from "../../lib/databaseConnection";
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "./auth/[...nextauth]"
-import { useSession, getSession } from "next-auth/react"
 
 
 const nextApiHandler: NextApiHandler = async (req, res) => {
@@ -21,22 +20,18 @@ const nextApiHandler: NextApiHandler = async (req, res) => {
   //   tinaCloudUser?.verified ||
   //   false;
 
-  let session = await getServerSession();
-  console.log("Session in gql", session)
-  let isAuthorized = true
-  // Boolean(session);
+  const session = await getServerSession(req, res, authOptions)
+  const userHasValidSession = Boolean(session)
 
-  // const nextAuthUser = res;
-  // const isAuthorized =
-  //   process.env.TINA_PUBLIC_IS_LOCAL === 'true'
-  //   || res?.status === 'authenticated'
-  //   || false
+  const isAuthorized =
+    process.env.TINA_PUBLIC_IS_LOCAL === 'true'
+    || userHasValidSession === true
+    || false
 
   if (isAuthorized) {
     const { query, variables } = req.body;
     const result = await databaseRequest({ query, variables });
 
-    console.log("Session in gql", session)
     return res.json(result);
   } else {
     return res.status(401).json({ error: "Unauthorized" });

@@ -10,6 +10,14 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  // callbacks: {
+  //   async redirect({ url, baseUrl }) {
+  //     // Allows relative callback URLs
+  //     if (url.startsWith("admin")) return baseUrl
+  //     // Allows callback URLs on the same origin
+  //     else return `${baseUrl}/admin`
+  //   }
+  // }
 }
 
 export default NextAuth(authOptions)
