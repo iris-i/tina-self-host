@@ -146,7 +146,6 @@ export const Header = ({ data }) => {
                   </li>
                 );
               })}
-            <li><div onClick={() => signOut()}> <a className="text-crisp-highlight1">Log out</a></div></li>
 
           </ul>
         </div>

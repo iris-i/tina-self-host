@@ -10,14 +10,21 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-  // callbacks: {
-  //   async redirect({ url, baseUrl }) {
-  //     // Allows relative callback URLs
-  //     if (url.startsWith("admin")) return baseUrl
-  //     // Allows callback URLs on the same origin
-  //     else return `${baseUrl}/admin`
-  //   }
-  // }
+  session: {
+    strategy: "jwt"
+  },
+  callbacks: {
+    async jwt({ token, account }) {
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      session.accessToken = token.accessToken;
+      return session;
+    },
+  },
 }
 
 export default NextAuth(authOptions)

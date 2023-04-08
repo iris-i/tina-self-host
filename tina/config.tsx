@@ -26,8 +26,6 @@ const LOCAL_KEY = 'tina-cms-test';
 // }
 
 const getServerSideProps = async () => {
-  // const sessionData = await getServerSession()
-  // const userHasValidSession = Boolean(session)
   const res = await fetch(`/api/auth/session`)
   return res.json();
 }
@@ -41,17 +39,18 @@ const config = defineConfig({
       customAuth: true,
       authenticate: async () => {
         window.location.href = '/api/auth/signin?callbackUrl=/admin'
+
       },
       getToken: async () => {
         let sessionData = await getServerSideProps();
-        return sessionData?.user ? { id_token: 'a-test-token' } : '';
+        return sessionData?.accessToken ? { id_token: sessionData.accessToken } : '';
       },
       getUser: async () => {
         let sessionData = await getServerSideProps();
         return sessionData?.user;
       },
       logout: async () => {
-        window.location.href = '/api/auth/logout'
+        window.location.href = '/api/auth/signout?callbackUrl=/'
       },
     },
   },
